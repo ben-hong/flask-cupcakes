@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 connect_db(app)
 db.create_all()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def homepage():
     """ loads homepage with list of cupcakes and form to add cupcakes""" 
 
@@ -39,7 +39,7 @@ def make_cupcake():
     flavor = request.json['flavor']
     size = request.json['size']
     rating = request.json['rating']
-    image = request.json['image']
+    image = request.json['image'] or None
 
     cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
 

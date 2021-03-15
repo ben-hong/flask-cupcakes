@@ -1,5 +1,5 @@
 const $cupcakeList = $('.cupcakes-list');
-const BASE_URL = 'http://localhost:5000//api/cupcakes'
+const BASE_URL = 'http://localhost:5000/api/cupcakes'
 
 async function getCupcakes() {
     let getRequest = await axios.get(BASE_URL)
@@ -19,3 +19,22 @@ async function addCupcakesToPage() {
 }
 
 addCupcakesToPage()
+
+async function updateCupcakesPage() {
+    let flavor = $("#flavor").val()
+    let size = $("#size").val()
+    let rating = $("#rating").val()
+    let image = $("#image").val()
+
+    let new_cupcake = await axios.post(BASE_URL, 
+        {flavor, size, rating, image})
+    
+    console.log(new_cupcake)
+}
+
+
+
+$("form").on("submit", async function(e) {
+    e.preventDefault()
+    updateCupcakesPage()
+});
