@@ -107,3 +107,27 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_edit_cupcake(self):
+        with app.test_client() as client:
+            response = client.patch(f"/api/cupcakes/{self.cupcake.id}", json={
+            	"flavor": "mocha",
+            	"size": "small",
+            	"rating": 9,
+                "image": "http://test.com/cupcake.jpg"
+            })
+        
+        self.assertEqual(response.status_code, 200)
+
+        data = response.json
+
+        compare_to = {
+            "cupcake": {
+                    "flavor": "mocha", 
+                    "id": self.cupcake.id, 
+                    "image": "http://test.com/cupcake.jpg", 
+                    "rating": 9,
+                    "size": "small"}
+            }
+
+        self.assertEqual(data, compare_to)
