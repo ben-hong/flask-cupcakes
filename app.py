@@ -9,6 +9,12 @@ app.config['SQLALCHEMY_ECHO'] = True
 connect_db(app)
 db.create_all()
 
+@app.route('/')
+def homepage():
+    """ loads homepage with list of cupcakes and form to add cupcakes""" 
+
+    return render_template('cupcakes.html')
+
 @app.route('/api/cupcakes')
 def get_all_cupcakes():
     """ gets all cupcakes from database """
@@ -69,4 +75,4 @@ def delete_cupcake(cupcake_id):
     db.session.delete(cupcake)
     db.session.commit()
 
-    return jsonify(message="Deleted")
+    return jsonify(message="Deleted", id=cupcake_id)
